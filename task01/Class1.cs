@@ -9,4 +9,3 @@ public static class StringExtensions
         return input == new string(input.Reverse().ToArray());
     }
 }
-    
