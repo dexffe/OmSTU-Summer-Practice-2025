@@ -1,7 +1,7 @@
 ﻿namespace task01tests;
 
 using task01;
-using xUnit;
+using Xunit;
 
 public class StringExtensionsTests
 {
@@ -9,7 +9,7 @@ public class StringExtensionsTests
     public void IsPalindrome_ValidPalindrome_ReturnsTrue()
     {
         string input = "А роза упала на лапу Азора";
-        Assert.False(input.IsPalindrome());
+        Assert.True(input.IsPalindrome());
     }
 
     [Fact]
