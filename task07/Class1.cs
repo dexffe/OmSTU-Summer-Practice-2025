@@ -56,13 +56,16 @@ public static class ReflectionHelper
         Console.Write("methods: ");
         foreach (var method in type.GetMethods())
         {
-            var methodDN = method.GetCustomAttribute<DisplayNameAttribute>();
-            var DNforMethod = methodDN?.DisplayName;
-            if (DNforMethod == null)
+            if (method != null)
             {
-                DNforMethod = "no DN";
+                var methodDN = method.GetCustomAttribute<DisplayNameAttribute>();
+                var DNforMethod = methodDN?.DisplayName;
+                if (DNforMethod == null)
+                {
+                    DNforMethod = "no DN";
+                }
+                Console.Write($"{method.Name}[{DNforMethod}] ");
             }
-            Console.Write($"{method.Name}[{DNforMethod}] ");
         }
 
         Console.WriteLine();
@@ -70,13 +73,16 @@ public static class ReflectionHelper
         Console.Write("properties: ");
         foreach (var property in type.GetProperties())
         {
-            var propertyDN = property.GetCustomAttribute<DisplayNameAttribute>();
-            var DNforProperty = propertyDN?.DisplayName;
-            if (DNforProperty == null)
+            if (property != null)
             {
-                DNforProperty = "no DN";
+                var propertyDN = property.GetCustomAttribute<DisplayNameAttribute>();
+                var DNforProperty = propertyDN?.DisplayName;
+                if (DNforProperty == null)
+                {
+                    DNforProperty = "no DN";
+                }
+                Console.WriteLine($"{property.Name}[{DNforProperty}] ");
             }
-            Console.WriteLine($"{property.Name}[{DNforProperty}] ");
         }
     }
 }
