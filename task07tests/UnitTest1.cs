@@ -42,10 +42,4 @@ public class AttributeReflectionTests
         Assert.Equal(1, attribute.Major);
         Assert.Equal(0, attribute.Minor);
     }
-
-    [Fact]
-    public void test_reflection_class()
-    {
-        ReflectionHelper.PrintTypeInfo(typeof(SampleClass));
-    }
 }
