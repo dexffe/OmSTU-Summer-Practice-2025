@@ -56,13 +56,13 @@ public static class ReflectionHelper
         Console.Write("methods: ");
         foreach (var method in type.GetMethods())
         {
-            var methodDN = method.GetCustomAttribute<DisplayNameAttribute>();
+            var methodDN = method?.GetCustomAttribute<DisplayNameAttribute>();
             var DNforMethod = methodDN?.DisplayName;
             if (DNforMethod == null)
             {
                 DNforMethod = "no DN";
             }
-            Console.Write($"{method.Name}[{DNforMethod}] ");
+            Console.Write($"{method?.Name}[{DNforMethod}] ");
         }
 
         Console.WriteLine();
