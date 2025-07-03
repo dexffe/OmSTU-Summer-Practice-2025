@@ -27,7 +27,7 @@ public class FindFilesCommand : ICommand
 {
     private string dirPath;
     private string pattern;
-    public List<string> patternFiles;
+    public List<string> patternFiles = new();
 
     public FindFilesCommand(string directoryPath, string searchPattern)
     {
