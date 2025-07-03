@@ -53,7 +53,7 @@ public static class ReflectionHelper
             Console.WriteLine($"Version: {versionAttribute.Major}.{versionAttribute.Minor}");
         }
 
-        Console.Write("methods: ");
+        Console.Write("Methods:  ");
         foreach (var method in type.GetMethods())
         {
             if (method != null)
@@ -64,13 +64,13 @@ public static class ReflectionHelper
                 {
                     DNforMethod = "no DN";
                 }
-                Console.Write($"{method.Name}[{DNforMethod}] ");
+                Console.Write($"{method.Name}  ");
             }
         }
 
         Console.WriteLine();
 
-        Console.Write("properties: ");
+        Console.Write("Properties:  ");
         foreach (var property in type.GetProperties())
         {
             if (property != null)
@@ -81,7 +81,18 @@ public static class ReflectionHelper
                 {
                     DNforProperty = "no DN";
                 }
-                Console.WriteLine($"{property.Name}[{DNforProperty}] ");
+                Console.Write($"{property.Name}  ");
+            }
+        }
+
+        Console.WriteLine();
+
+        Console.Write("Constructors:  ");
+        foreach (var constructor in type.GetConstructors())
+        {
+            if (constructor != null)
+            {
+                Console.Write($"{constructor.Name}  ");
             }
         }
     }
