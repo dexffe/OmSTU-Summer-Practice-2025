@@ -16,36 +16,44 @@ public interface ICalculator
 
 public class Calculator
 {
-    public static ICalculator Main()
+    public static ICalculator Create()
     {
-        string calculatorCode = @"public class Calculator : ICalculator
-                                {
-                                    public int Add(int a, int b) => a + b;
-                                    public int Minus(int a, int b) => a - b;
-                                    public int Mul(int a, int b) => a * b;
-                                    public int Div(int a, int b) => a / b;
-                                }";
+        string calculatorCode = @"
+                namespace task11;
+                public class Calculator : ICalculator
+                {
+                    public int Add(int a, int b) => a + b;
+                    public int Minus(int a, int b) => a - b;
+                    public int Mul(int a, int b) => a * b;
+                    public int Div(int a, int b) => a / b;
+                }";
 
         var syntaxTree = CSharpSyntaxTree.ParseText(calculatorCode);
 
-        var refs = new[]
+        var refPaths = new[]
         {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(ICalculator).Assembly.Location)
+            typeof(object).Assembly.Location,
+            typeof(ICalculator).Assembly.Location
         };
 
-        var compilation = CSharpCompilation.Create("CalculatorAssembly", new[] { syntaxTree }, refs,
-                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        var references = refPaths.Select(r => MetadataReference.CreateFromFile(r)).ToArray();
+
+        var compilation = CSharpCompilation.Create(
+            "CalculatorAssembly",
+            new[] { syntaxTree },
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
         using var ms = new MemoryStream();
         var emitResult = compilation.Emit(ms);
 
         ms.Seek(0, SeekOrigin.Begin);
-
         var assembly = Assembly.Load(ms.ToArray());
+        var calcType = assembly.GetType("task11.Calculator");
 
-        var calcType = assembly.GetType("Calculator");
+        if (calcType == null)
+            throw new Exception("Calculator type not found");
 
-        return (ICalculator)Activator.CreateInstance(calcType);
+        return (ICalculator)Activator.CreateInstance(calcType)!;
     }
 }
